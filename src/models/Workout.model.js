@@ -33,6 +33,9 @@ class Workout {
       throw new Error("Invalid date format.");
     }
 
+    if (exercises && !Array.isArray(exercises)) {
+      throw new Error("Exercises must be an array of exercise IDs.");
+    }
     const workout = new WorkoutModel(name, duration, date, exercises);
     return await workout.save();
   }
@@ -44,6 +47,10 @@ class Workout {
     }
     if (name !== undefined) workout.name = name;
     if (duration !== undefined) workout.duration = duration;
+    if (date !== undefined) workout.duration = date;
+    if (exercises !== undefined) workout.duration = exercises;
+
+    return await workout.save();
   }
 
   static async delete(id) {
