@@ -2,6 +2,24 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const PORT = process.env.PORT || 3000;
+const { connectMongo } = require("./config/db.mongo");
+
+app.get("/api/test-db", async (req, res) => {
+  try {
+    // Test MongoDB
+    await connectMongo();
+
+    res.json({
+      status: "ok",
+      mongodb: "Connected successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+});
 
 app.use(cors());
 app.use(express.json());
