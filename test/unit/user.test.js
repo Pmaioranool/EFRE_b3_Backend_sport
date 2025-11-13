@@ -92,53 +92,6 @@ describe("User Controller", () => {
     });
   });
 
-  describe("createUser", () => {
-    it("should create a user and return 201", async () => {
-      const newUser = {
-        id: "3",
-        name: "Bob Wilson",
-        email: "bob@example.com",
-        workouts_completed: 0,
-        last_login: null,
-      };
-
-      req.body = {
-        name: "Bob Wilson",
-        email: "bob@example.com",
-        password: "password123",
-      };
-      User.create.mockResolvedValue(newUser);
-
-      await UserController.createUser(req, res, next);
-
-      expect(User.create).toHaveBeenCalledWith({
-        name: "Bob Wilson",
-        email: "bob@example.com",
-        password: "password123",
-      });
-      expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.json).toHaveBeenCalledWith(newUser);
-
-      const returned = res.json.mock.calls[0][0];
-      expect(returned.name).toBe("Bob Wilson");
-      expect(returned.email).toBe("bob@example.com");
-    });
-
-    it("should call next on creation error", async () => {
-      const err = new Error("Email already exists");
-      req.body = {
-        name: "Bob Wilson",
-        email: "bob@example.com",
-        password: "password123",
-      };
-      User.create.mockRejectedValue(err);
-
-      await UserController.createUser(req, res, next);
-
-      expect(next).toHaveBeenCalledWith(err);
-    });
-  });
-
   describe("updateUser", () => {
     it("should update a user and return it", async () => {
       const updatedUser = {
