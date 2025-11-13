@@ -40,27 +40,62 @@ class Exercise {
     return await ExerciseModel.findById(id).exec();
   }
 
-  static async create({ Title, Type, BodyPart, Equipment, Level }) {
+  static async create({
+    Title,
+    Desc = "",
+    Type,
+    BodyPart,
+    Equipment,
+    Level,
+    Rating = 0,
+    RatingDesc = "",
+  }) {
     if (!Title || !Type || !BodyPart || !Equipment || !Level) {
       throw new Error(
         "Title,type, bodypart, equipment,level are required to create a exercise."
       );
     }
 
-    const exercise = new ExerciseModel(Title, Type, BodyPart, Equipment, Level);
+    const exercise = new ExerciseModel(
+      Title,
+      Desc,
+      Type,
+      BodyPart,
+      Equipment,
+      Level,
+      Rating,
+      RatingDesc
+    );
     return await exercise.save();
   }
 
-  static async update(id, { Title, Type, BodyPart, Equipment, Level }) {
+  static async update(
+    id,
+    {
+      Title,
+      Desc = "",
+      Type,
+      BodyPart,
+      Equipment,
+      Level,
+      Rating = 0,
+      RatingDesc = "",
+    }
+  ) {
     const exercise = await ExerciseModel.findById(id);
     if (!exercise) {
       throw new Error("Exercise not found.");
     }
     if (Title !== undefined) exercise.Title = Title;
+    if (Desc !== undefined) exercise.Desc = Desc;
     if (Type !== undefined) exercise.Type = Type;
     if (BodyPart !== undefined) exercise.BodyPart = BodyPart;
     if (Equipment !== undefined) exercise.Equipment = Equipment;
     if (Level !== undefined) exercise.Level = Level;
+    if (Rating !== undefined) exercise.Rating = Rating;
+    if (Rating !== undefined) exercise.Rating = Rating;
+
+    return await exercise.save();
   }
 
   static async delete(id) {

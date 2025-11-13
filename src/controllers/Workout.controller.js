@@ -20,11 +20,12 @@ exports.getWorkoutById = async (req, res, next) => {
 
 exports.createWorkout = async (req, res, next) => {
   try {
-    const { name, description, price } = req.body;
+    const { name, duration, date, exercises } = req.body;
     const newWorkout = await Workout.create({
       name,
-      description,
-      price,
+      duration,
+      date,
+      exercises,
     });
     return res.status(201).json(newWorkout);
   } catch (e) {
@@ -34,11 +35,12 @@ exports.createWorkout = async (req, res, next) => {
 
 exports.updateWorkout = async (req, res, next) => {
   try {
-    const { name, description, price } = req.body;
+    const { name, duration, date, exercises } = req.body;
     const updatedWorkout = await Workout.update(req.params.id, {
       name,
-      description,
-      price,
+      duration,
+      date,
+      exercises,
     });
     return res.status(200).json(updatedWorkout);
   } catch (e) {

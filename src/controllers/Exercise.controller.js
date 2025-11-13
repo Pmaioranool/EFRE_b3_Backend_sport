@@ -28,11 +28,25 @@ exports.getExerciseById = async (req, res, next) => {
 
 exports.createExercise = async (req, res, next) => {
   try {
-    const { name, description, price } = req.body;
+    const {
+      Title,
+      Desc = "",
+      Type,
+      BodyPart,
+      Equipment,
+      Level,
+      Rating = 0,
+      RatingDesc = "",
+    } = req.body;
     const newExercise = await Exercise.create({
-      name,
-      description,
-      price,
+      Title,
+      Desc,
+      Type,
+      BodyPart,
+      Equipment,
+      Level,
+      Rating,
+      RatingDesc,
     });
     return res.status(201).json(newExercise);
   } catch (e) {
@@ -42,11 +56,25 @@ exports.createExercise = async (req, res, next) => {
 
 exports.updateExercise = async (req, res, next) => {
   try {
-    const { name, description, price } = req.body;
+    const {
+      Title,
+      Desc = "",
+      Type,
+      BodyPart,
+      Equipment,
+      Level,
+      Rating = 0,
+      RatingDesc = "",
+    } = req.body;
     const updatedExercise = await Exercise.update(req.params.id, {
-      name,
-      description,
-      price,
+      Title,
+      Desc,
+      Type,
+      BodyPart,
+      Equipment,
+      Level,
+      Rating,
+      RatingDesc,
     });
     return res.status(200).json(updatedExercise);
   } catch (e) {
