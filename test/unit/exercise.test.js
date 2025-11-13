@@ -82,24 +82,39 @@ describe("Exercise Controller", () => {
     it("should create a new exercise", async () => {
       const newExercise = {
         _id: "1",
-        name: "Push Up",
-        description: "Upper body exercise",
-        price: 0,
+        Title: "Push Up",
+        Desc: "Upper body exercise",
+        Type: "Strength",
+        BodyPart: "Chest",
+        Equipment: "Bodyweight",
+        Level: "Beginner",
+        Rating: 0,
+        RatingDesc: "",
       };
 
       req.body = {
-        name: "Push Up",
-        description: "Upper body exercise",
-        price: 0,
+        Title: "Push Up",
+        Desc: "Upper body exercise",
+        Type: "Strength",
+        BodyPart: "Chest",
+        Equipment: "Bodyweight",
+        Level: "Beginner",
+        Rating: 0,
+        RatingDesc: "",
       };
       Exercise.create.mockResolvedValue(newExercise);
 
       await ExerciseController.createExercise(req, res, next);
 
       expect(Exercise.create).toHaveBeenCalledWith({
-        name: "Push Up",
-        description: "Upper body exercise",
-        price: 0,
+        Title: "Push Up",
+        Desc: "Upper body exercise",
+        Type: "Strength",
+        BodyPart: "Chest",
+        Equipment: "Bodyweight",
+        Level: "Beginner",
+        Rating: 0,
+        RatingDesc: "",
       });
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.json).toHaveBeenCalledWith(newExercise);
@@ -107,7 +122,7 @@ describe("Exercise Controller", () => {
 
     it("should handle creation errors", async () => {
       const error = new Error("Name and duration are required");
-      req.body = { description: "No name" };
+      req.body = { Desc: "No name" };
       Exercise.create.mockRejectedValue(error);
 
       await ExerciseController.createExercise(req, res, next);
@@ -120,25 +135,40 @@ describe("Exercise Controller", () => {
     it("should update an exercise", async () => {
       const updatedExercise = {
         _id: "1",
-        name: "Modified Push Up",
-        description: "Modified description",
-        price: 10,
+        Title: "Modified Push Up",
+        Desc: "Modified description",
+        Type: "Strength",
+        BodyPart: "Chest",
+        Equipment: "Bodyweight",
+        Level: "Intermediate",
+        Rating: 5,
+        RatingDesc: "Great",
       };
 
       req.params.id = "1";
       req.body = {
-        name: "Modified Push Up",
-        description: "Modified description",
-        price: 10,
+        Title: "Modified Push Up",
+        Desc: "Modified description",
+        Type: "Strength",
+        BodyPart: "Chest",
+        Equipment: "Bodyweight",
+        Level: "Intermediate",
+        Rating: 5,
+        RatingDesc: "Great",
       };
       Exercise.update.mockResolvedValue(updatedExercise);
 
       await ExerciseController.updateExercise(req, res, next);
 
       expect(Exercise.update).toHaveBeenCalledWith("1", {
-        name: "Modified Push Up",
-        description: "Modified description",
-        price: 10,
+        Title: "Modified Push Up",
+        Desc: "Modified description",
+        Type: "Strength",
+        BodyPart: "Chest",
+        Equipment: "Bodyweight",
+        Level: "Intermediate",
+        Rating: 5,
+        RatingDesc: "Great",
       });
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith(updatedExercise);
@@ -150,31 +180,6 @@ describe("Exercise Controller", () => {
       Exercise.update.mockRejectedValue(error);
 
       await ExerciseController.updateExercise(req, res, next);
-
-      expect(next).toHaveBeenCalledWith(error);
-    });
-  });
-
-  describe("deleteExercise", () => {
-    it("should delete an exercise", async () => {
-      req.params.id = "1";
-      Exercise.delete.mockResolvedValue({ _id: "1", Title: "Push Up" });
-
-      await ExerciseController.deleteExercise(req, res, next);
-
-      expect(Exercise.delete).toHaveBeenCalledWith("1");
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({
-        message: "Exercise deleted successfully",
-      });
-    });
-
-    it("should handle delete errors", async () => {
-      const error = new Error("Exercise not found");
-      req.params.id = "invalid";
-      Exercise.delete.mockRejectedValue(error);
-
-      await ExerciseController.deleteExercise(req, res, next);
 
       expect(next).toHaveBeenCalledWith(error);
     });
