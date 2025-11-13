@@ -82,40 +82,7 @@ router.get("/:id", ctrl.getUserById);
  *       500:
  *         description: Erreur serveur
  */
-router.post("/", ctrl.createUser);
 
-/**
- * @openapi
- * /api/users/{id}:
- *   put:
- *     summary: Mettre à jour un utilisateur
- *     description: Met à jour les informations d'un utilisateur existant
- *     tags: [Users]
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *         description: ID de l'utilisateur
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UserUpdate'
- *     responses:
- *       200:
- *         description: Utilisateur mis à jour avec succès
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       404:
- *         description: Utilisateur non trouvé
- *       500:
- *         description: Erreur serveur
- */
 router.put("/:id", ctrl.updateUser);
 
 /**
