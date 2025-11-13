@@ -1,9 +1,28 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = process.env.PORT || 3000;
-const { connectMongo } = require("./config/db.mongo");
+const PORT = 3000;
 const { pool } = require("./config/db.postgres");
+const { connectMongo } = require("./config/db.mongo");
+
+app.use(cors());
+app.use(express.json());
+
+// Connexion aux bases de données avant de démarrer le serveur
+async function startServer() {
+  try {
+    // Connexion MongoDB
+    await connectMongo();
+
+    // Test PostgreSQL
+    await pool.query("SELECT NOW()");
+  } catch (error) {
+    console.error("Erreur de démarrage:", error);
+    process.exit(1);
+  }
+}
+
+startServer();
 
 // Test des connexions aux bases de données
 app.get("/api/test-db", async (req, res) => {
@@ -28,10 +47,13 @@ app.get("/api/test-db", async (req, res) => {
   }
 });
 
-app.use(cors());
-app.use(express.json());
+// Mount routes
+const exerciseRoutes = require("./routes/exercise.routes");
+app.use("/api/exercises", exerciseRoutes);
+const workoutRoutes = require("./routes/workout.routes");
+app.use("/api/workouts", workoutRoutes);
 
-// status
+// Health
 app.get("/api/status", (req, res) => {
   res.json({ status: "ok", time: new Date().toISOString() });
 });
