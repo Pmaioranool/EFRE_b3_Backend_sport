@@ -15,7 +15,8 @@ async function startServer() {
     await connectMongo();
 
     // Test PostgreSQL
-    await pool.query("SELECT NOW()");
+    const pgResult = await pool.query("SELECT NOW()");
+    console.log("✅ PostgreSQL connected:", pgResult.rows[0]);
   } catch (error) {
     console.error("Erreur de démarrage:", error);
     process.exit(1);
@@ -43,6 +44,29 @@ app.get("/api/test-db", async (req, res) => {
     res.status(500).json({
       status: "error",
       message: error.message,
+    });
+  }
+});
+
+//init user table if needed
+app.get("/init-db", async (req, res) => {
+  console.log("object");
+  try {
+    await pool.query(`CREATE TABLE users (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      email VARCHAR(255) NOT NULL UNIQUE,
+      password VARCHAR(255) NOT NULL,
+      workouts_completed INT DEFAULT 0,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      last_login TIMESTAMP NULL
+    );`);
+    res.json({ status: "Database initialized" });
+  } catch (error) {
+    res.status(500).json({
+      status: "Error initializing database",
+      error: error.message,
     });
   }
 });
