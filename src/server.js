@@ -82,6 +82,10 @@ app.get("/api/status", (req, res) => {
   res.json({ status: "ok", time: new Date().toISOString() });
 });
 
+app.get("/pinte", (req, res) => {
+  res.send("+1 pinte");
+});
+
 // 404
 app.use((req, res) => res.status(404).json({ error: "Route inconnue" }));
 
