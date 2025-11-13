@@ -1,5 +1,5 @@
 const { pool } = require("../config/db.postgres");
-const Workout = require("./models/Workout");
+const Workout = require("./Workout.model");
 const bcrypt = require("bcrypt");
 
 class User {
