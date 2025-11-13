@@ -58,7 +58,7 @@ app.get("/api/test-db", async (req, res) => {
 });
 
 //init user table if needed
-app.get("/init-db", async (req, res) => {
+app.get("/api/init-db", async (req, res) => {
   console.log("object");
   try {
     await pool.query(`CREATE TABLE users (
@@ -89,6 +89,7 @@ const userRoutes = require("./routes/user.routes");
 app.use("/api/users", userRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/api/auth", authRoutes);
+
 // Health
 app.get("/api/status", (req, res) => {
   res.json({ status: "ok", time: new Date().toISOString() });

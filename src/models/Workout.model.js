@@ -10,7 +10,6 @@ const WorkoutSchema = new Schema(
     userId: [{ type: Number }],
   },
   {
-    _id: true,
     timestamps: true,
   }
 );
@@ -30,6 +29,7 @@ class Workout {
     if (!name || !duration) {
       throw new Error("Name and duration are required to create a workout.");
     }
+
     if (date && isNaN(new Date(date).getTime())) {
       throw new Error("Invalid date format.");
     }
@@ -37,7 +37,14 @@ class Workout {
     if (exercises && !Array.isArray(exercises)) {
       throw new Error("Exercises must be an array of exercise IDs.");
     }
-    const workout = new WorkoutModel(name, duration, date, exercises);
+
+    const workout = new WorkoutModel({
+      name,
+      duration,
+      date: date || new Date(),
+      exercises,
+    });
+
     return await workout.save();
   }
 
@@ -46,10 +53,22 @@ class Workout {
     if (!workout) {
       throw new Error("Workout not found.");
     }
+
+    // CORRECTION : Assignation correcte de tous les champs
     if (name !== undefined) workout.name = name;
     if (duration !== undefined) workout.duration = duration;
-    if (date !== undefined) workout.duration = date;
-    if (exercises !== undefined) workout.duration = exercises;
+    if (date !== undefined) {
+      if (isNaN(new Date(date).getTime())) {
+        throw new Error("Invalid date format.");
+      }
+      workout.date = date;
+    }
+    if (exercises !== undefined) {
+      if (!Array.isArray(exercises)) {
+        throw new Error("Exercises must be an array of exercise IDs.");
+      }
+      workout.exercises = exercises;
+    }
 
     return await workout.save();
   }

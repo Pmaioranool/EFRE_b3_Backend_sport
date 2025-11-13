@@ -4,16 +4,15 @@ const Schema = mongoose.Schema;
 const ExerciseSchema = new Schema(
   {
     Title: { type: String, required: true },
-    Desc: { type: String },
+    Desc: { type: String, default: "" },
     Type: { type: String, required: true },
     BodyPart: { type: String, required: true },
     Equipment: { type: String, required: true },
     Level: { type: String, required: true },
-    Rating: { type: Number },
-    RatingDesc: { type: String },
+    Rating: { type: Number, default: 0 },
+    RatingDesc: { type: String, default: "" },
   },
   {
-    _id: true,
     timestamps: true,
   }
 );
@@ -23,7 +22,7 @@ const ExerciseModel = mongoose.model("Exercise", ExerciseSchema);
 class Exercise {
   static async getAll({ title, level, rating, limit, all = false } = {}) {
     const filters = {};
-    if (title) filters.Title = new RegExp(title, "i"); // case insensitive a === A
+    if (title) filters.Title = new RegExp(title, "i");
     if (rating > 0) filters.Rating = { $gte: rating };
     if (level) filters.Level = level;
 
@@ -52,11 +51,11 @@ class Exercise {
   }) {
     if (!Title || !Type || !BodyPart || !Equipment || !Level) {
       throw new Error(
-        "Title,type, bodypart, equipment,level are required to create a exercise."
+        "Title, type, bodypart, equipment, level are required to create an exercise."
       );
     }
 
-    const exercise = new ExerciseModel(
+    const exercise = new ExerciseModel({
       Title,
       Desc,
       Type,
@@ -64,8 +63,9 @@ class Exercise {
       Equipment,
       Level,
       Rating,
-      RatingDesc
-    );
+      RatingDesc,
+    });
+
     return await exercise.save();
   }
 
@@ -86,6 +86,7 @@ class Exercise {
     if (!exercise) {
       throw new Error("Exercise not found.");
     }
+
     if (Title !== undefined) exercise.Title = Title;
     if (Desc !== undefined) exercise.Desc = Desc;
     if (Type !== undefined) exercise.Type = Type;
@@ -93,7 +94,7 @@ class Exercise {
     if (Equipment !== undefined) exercise.Equipment = Equipment;
     if (Level !== undefined) exercise.Level = Level;
     if (Rating !== undefined) exercise.Rating = Rating;
-    if (Rating !== undefined) exercise.Rating = Rating;
+    if (RatingDesc !== undefined) exercise.RatingDesc = RatingDesc;
 
     return await exercise.save();
   }
