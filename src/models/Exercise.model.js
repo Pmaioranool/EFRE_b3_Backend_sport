@@ -29,25 +29,27 @@ class Exercise {
     return await ExerciseModel.findById(id).exec();
   }
 
-  static async create({ name, duration, date, exercises = [] }) {
-    if (!name || !duration) {
-      throw new Error("Name and duration are required to create a exercise.");
-    }
-    if (date && isNaN(new Date(date).getTime())) {
-      throw new Error("Invalid date format.");
+  static async create({ Title, Type, BodyPart, Equipment, Level }) {
+    if (!Title || !Type || !BodyPart || !Equipment || !Level) {
+      throw new Error(
+        "Title,type, bodypart, equipment,level are required to create a exercise."
+      );
     }
 
-    const exercise = new ExerciseModel(name, duration, date, exercises);
+    const exercise = new ExerciseModel(Title, Type, BodyPart, Equipment, Level);
     return await exercise.save();
   }
 
-  static async update(id, { name, duration, date, exercises }) {
+  static async update(id, { Title, Type, BodyPart, Equipment, Level }) {
     const exercise = await ExerciseModel.findById(id);
     if (!exercise) {
       throw new Error("Exercise not found.");
     }
-    if (name !== undefined) exercise.name = name;
-    if (duration !== undefined) exercise.duration = duration;
+    if (Title !== undefined) exercise.Title = Title;
+    if (Type !== undefined) exercise.Type = Type;
+    if (BodyPart !== undefined) exercise.BodyPart = BodyPart;
+    if (Equipment !== undefined) exercise.Equipment = Equipment;
+    if (Level !== undefined) exercise.Level = Level;
   }
 
   static async delete(id) {
