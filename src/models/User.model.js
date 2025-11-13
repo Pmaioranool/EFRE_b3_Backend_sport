@@ -68,7 +68,7 @@ class User {
     return { user };
   }
 
-  static async deleteById(id) {
+  static async delete(id) {
     await pool.query("DELETE FROM users WHERE id = $1", [id]);
     return { deleted: true };
   }
