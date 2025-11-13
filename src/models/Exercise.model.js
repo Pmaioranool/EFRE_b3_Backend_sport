@@ -21,8 +21,19 @@ const ExerciseSchema = new Schema(
 const ExerciseModel = mongoose.model("Exercise", ExerciseSchema);
 
 class Exercise {
-  static async getAll() {
-    return await ExerciseModel.find().exec();
+  static async getAll({ title, level, rating, limit, all = false } = {}) {
+    const filters = {};
+    if (title) filters.Title = new RegExp(title, "i"); // case insensitive a === A
+    if (rating > 0) filters.Rating = { $gte: rating };
+    if (level) filters.Level = level;
+
+    let query = ExerciseModel.find(filters);
+
+    if (!all) {
+      query = query.limit(parseInt(limit || 10, 10));
+    }
+
+    return await query.exec();
   }
 
   static async getById(id) {
