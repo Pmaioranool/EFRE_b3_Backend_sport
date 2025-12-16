@@ -229,7 +229,7 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 ## 👥 Auteurs
 
-- Votre nom - Développement initial
+lucas  et yanis
 
 ## 🆘 Support
 
