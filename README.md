@@ -2,7 +2,7 @@
 
 Une application backend complète pour la gestion d'exercices, de workouts et d'utilisateurs, construite avec Node.js, Express, MongoDB et PostgreSQL.
 
-## 🚀 Fonctionnalités
+## Fonctionnalités
 
 ### Exercices
 
@@ -25,7 +25,7 @@ Une application backend complète pour la gestion d'exercices, de workouts et d'
 - Historique de connexion
 - Mots de passe sécurisés avec bcrypt
 
-## 🛠️ Stack Technique
+## Stack Technique
 
 - **Backend**: Node.js, Express.js
 - **Bases de données**:
@@ -35,7 +35,7 @@ Une application backend complète pour la gestion d'exercices, de workouts et d'
 - **Tests**: Jest pour les tests unitaires
 - **CORS**: Gestion des requêtes cross-origin
 
-## 📋 Prérequis
+## Prérequis
 
 - Node.js (v14 ou supérieur)
 - MongoDB
@@ -43,7 +43,7 @@ Une application backend complète pour la gestion d'exercices, de workouts et d'
 - npm ou yarn
 - Docker et Docker Compose (optionnel, pour le déploiement)
 
-## ⚙️ Installation
+## Installation
 
 1. **Cloner le repository**
 
@@ -115,7 +115,9 @@ JWT_REFRESH_SECRET=secret
 docker-compose up --build api
 ```
 
-## 🚀 Démarrage
+en savoir plus dans le fichier `Docker.md`.
+
+## Démarrage
 
 ### Node.js
 
@@ -145,7 +147,7 @@ docker-compose down
 
 L'application sera accessible sur `http://localhost:3000`
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### Exercices (`/api/exercises`)
 
@@ -174,7 +176,7 @@ L'application sera accessible sur `http://localhost:3000`
 - `PUT /:id/workouts-completed` - Incrémenter les workouts complétés
 - `DELETE /:id` - Supprimer un utilisateur
 
-## 🧪 Tests
+## Tests
 
 **Exécuter tous les tests :**
 
@@ -201,7 +203,7 @@ npm run test:watch
   - `workout.test.js` - Tests du contrôleur Workout
   - `exercise.test.js` - Tests du contrôleur Exercise
 
-## 🗂️ Structure du Projet
+## Structure du Projet
 
 ```
 src/
@@ -226,7 +228,7 @@ src/
     └── exercise.test.js
 ```
 
-## 🔧 Scripts Disponibles
+## Scripts Disponibles
 
 - `npm start` - Démarrer en production
 - `npm run dev` - Démarrer en développement avec nodemon
@@ -234,7 +236,7 @@ src/
 - `npm run test:coverage` - Tests avec rapport de couverture
 - `npm run test:watch` - Tests en mode watch
 
-## 🗃️ Modèles de Données
+## Modèles de Données
 
 ### Exercise (MongoDB)
 
@@ -278,7 +280,7 @@ CREATE TABLE users (
 );
 ```
 
-## 🤝 Contribution
+## Contribution
 
 1. Fork le projet
 2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)
@@ -286,10 +288,10 @@ CREATE TABLE users (
 4. Push sur la branche (`git push origin feature/AmazingFeature`)
 5. Ouvrir une Pull Request
 
-## 👥 Auteurs
+## Auteurs
 
 lucas et yanis
 
-## 🆘 Support
+## Support
 
 Si vous rencontrez des problèmes, veuillez ouvrir une issue sur le repository GitHub.
